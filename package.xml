@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mir_experiments</name>
+  <version>0.0.1</version>
+  <description>The mir_experiments package</description>
+
+  <maintainer email="gstavrinos@iit.demokritos.gr">George Stavrinos</maintainer>
+
+
+  <license>TODO</license>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>mir_actions</build_depend>
+  <build_depend>mir_description</build_depend>
+  <build_depend>mir_driver</build_depend>
+  <build_depend>mir_dwb_critics</build_depend>
+  <build_depend>mir_gazebo</build_depend>
+  <build_depend>mir_msgs</build_depend>
+  <build_depend>mir_navigation</build_depend>
+  <build_export_depend>mir_actions</build_export_depend>
+  <build_export_depend>mir_description</build_export_depend>
+  <build_export_depend>mir_driver</build_export_depend>
+  <build_export_depend>mir_dwb_critics</build_export_depend>
+  <build_export_depend>mir_gazebo</build_export_depend>
+  <build_export_depend>mir_msgs</build_export_depend>
+  <build_export_depend>mir_navigation</build_export_depend>
+  <exec_depend>mir_actions</exec_depend>
+  <exec_depend>mir_description</exec_depend>
+  <exec_depend>mir_driver</exec_depend>
+  <exec_depend>mir_dwb_critics</exec_depend>
+  <exec_depend>mir_gazebo</exec_depend>
+  <exec_depend>mir_msgs</exec_depend>
+  <exec_depend>mir_navigation</exec_depend>
+
+</package>
