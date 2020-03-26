@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   mir_gazebo
   mir_msgs
   mir_navigation
+  roboskel_ros_resources
 )
 catkin_package()
 

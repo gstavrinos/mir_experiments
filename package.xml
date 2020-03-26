@@ -17,6 +17,7 @@
   <build_depend>mir_gazebo</build_depend>
   <build_depend>mir_msgs</build_depend>
   <build_depend>mir_navigation</build_depend>
+  <build_depend>roboskel_ros_resources</build_depend>
   <build_export_depend>mir_actions</build_export_depend>
   <build_export_depend>mir_description</build_export_depend>
   <build_export_depend>mir_driver</build_export_depend>
@@ -24,6 +25,7 @@
   <build_export_depend>mir_gazebo</build_export_depend>
   <build_export_depend>mir_msgs</build_export_depend>
   <build_export_depend>mir_navigation</build_export_depend>
+  <build_export_depend>roboskel_ros_resources</build_export_depend>
   <exec_depend>mir_actions</exec_depend>
   <exec_depend>mir_description</exec_depend>
   <exec_depend>mir_driver</exec_depend>
@@ -31,5 +33,6 @@
   <exec_depend>mir_gazebo</exec_depend>
   <exec_depend>mir_msgs</exec_depend>
   <exec_depend>mir_navigation</exec_depend>
+  <exec_depend>roboskel_ros_resources</exec_depend>
 
 </package>
