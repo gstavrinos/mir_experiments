@@ -12,8 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   mir_gazebo
   mir_msgs
   mir_navigation
+  octomap_server
+  laserscan_to_pointcloud
   roboskel_ros_resources
 )
+
 catkin_package()
 
 include_directories(
@@ -22,5 +25,7 @@ include_directories(
 
 install(DIRECTORY
   launch
+  maps
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
