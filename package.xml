@@ -8,37 +8,28 @@
 
 
   <license>TODO</license>
-  
+
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>mir_actions</build_depend>
-  <build_depend>mir_description</build_depend>
-  <build_depend>mir_driver</build_depend>
-  <build_depend>mir_dwb_critics</build_depend>
-  <build_depend>mir_gazebo</build_depend>
-  <build_depend>mir_msgs</build_depend>
-  <build_depend>mir_navigation</build_depend>
-  <build_depend>octomap_server</build_depend>
-  <build_depend>laserscan_to_pointcloud</build_depend>
-  <build_depend>roboskel_ros_resources</build_depend>
-  <build_export_depend>mir_actions</build_export_depend>
-  <build_export_depend>mir_description</build_export_depend>
-  <build_export_depend>mir_driver</build_export_depend>
-  <build_export_depend>mir_dwb_critics</build_export_depend>
-  <build_export_depend>mir_gazebo</build_export_depend>
-  <build_export_depend>mir_msgs</build_export_depend>
-  <build_export_depend>mir_navigation</build_export_depend>
-  <build_export_depend>octomap_server</build_export_depend>
-  <build_export_depend>laserscan_to_pointcloud</build_export_depend>
-  <build_export_depend>roboskel_ros_resources</build_export_depend>
-  <exec_depend>mir_actions</exec_depend>
-  <exec_depend>mir_description</exec_depend>
-  <exec_depend>mir_driver</exec_depend>
-  <exec_depend>mir_dwb_critics</exec_depend>
-  <exec_depend>mir_gazebo</exec_depend>
-  <exec_depend>mir_msgs</exec_depend>
-  <exec_depend>mir_navigation</exec_depend>
-  <exec_depend>octomap_server</exec_depend>
-  <exec_depend>laserscan_to_pointcloud</exec_depend>
-  <exec_depend>roboskel_ros_resources</exec_depend>
+  <depend>mir_actions</depend>
+  <depend>mir_description</depend>
+  <depend>mir_driver</depend>
+  <depend>mir_dwb_critics</depend>
+  <depend>mir_gazebo</depend>
+  <depend>mir_msgs</depend>
+  <depend>mir_navigation</depend>
+  <depend>octomap_server</depend>
+  <depend>laserscan_to_pointcloud</depend>
+  <depend>roboskel_ros_resources</depend>
+  <depend>roscpp</depend>
+  <depend>visualization_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>pcl_ros</depend>
+  <depend>pcl_conversions</depend>
+  <depend>nav_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>octomap_ros</depend>
+  <depend>octomap_msgs</depend>
+
 
 </package>
