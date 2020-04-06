@@ -132,12 +132,11 @@
 	</node>
 
 
-    <node pkg="octomap_server" type="octomap_tracking_server_node" name="octomap_tracking_server" args="$(find mir_experiments)/maps/tidy_small.bt" output="screen">
+    <node pkg="mir_experiments" type="octomap_map_changes" name="octomap_tracking_server" args="$(find mir_experiments)/maps/tidy_small.bt" output="screen">
 		<param name="resolution" value="0.05" />
 		
         <param name="frame_id" type="string" value="odom_comb" />
         <param name="base_frame_id" type="string" value="odom_comb" />
-        <param name="track_changes" type="boolean" value="true" />
         <param name="change_id_frame" type="string" value="odom_comb" />
         <param name="topic_changes" value="/octomap_tracking_server/changeset" />
 
