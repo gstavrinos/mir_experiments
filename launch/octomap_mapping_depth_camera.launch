@@ -7,7 +7,7 @@
         <param name="filter_ground" type="bool" value="true" />
 
 		<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
-        <param name="frame_id" type="string" value="odom_comb" />
+        <param name="frame_id" type="string" value="odom" />
 		<!-- data source to integrate (PointCloud2) -->
         <remap from="cloud_in" to="/camera/depth/points" />
 	

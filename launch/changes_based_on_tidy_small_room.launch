@@ -29,7 +29,7 @@
 	<!-- The assembly configurations can be dynamically changed based on twist messages (or twist from odometry messages) or can also be used linear velocity and acceleration from imu messages -->
 	<!-- The assembly time and number of scans to merge are set to the lowest values computed from the linear angular velocities -->
 	<arg name="dynamic_update_of_assembly_configuration_from_twist_topic" default="" />
-	<arg name="dynamic_update_of_assembly_configuration_from_odometry_topic" default="odom_comb" />
+	<arg name="dynamic_update_of_assembly_configuration_from_odometry_topic" default="odom" />
 	<arg name="dynamic_update_of_assembly_configuration_from_imu_topic" default="" /> <!-- Assumes that the robot starts stopped, because it incrementally updates the linear velocity based on the imu linear acceleration -->
 	<arg name="min_number_of_scans_to_assemble_per_cloud" default="1" />
 	<arg name="max_number_of_scans_to_assemble_per_cloud" default="10" />
@@ -48,7 +48,7 @@
 	If your really need to assemble the point cloud in a frame with discrete jumps and also need distortion correction using spherical linear interpolation, then you should specify the auxiliary TF chain for motion estimation.
 	This auxiliary TF chain must have smooth evolution over time (if it is not smooth or the motion estimation is not reliable, then its better to disable the distortion correction algorithms).
 	The recommended frame is odom, published by a well calibrated odometry node receiving data from good wheel encoders. -->
-	<arg name="target_frame" default="odom_comb" />
+	<arg name="target_frame" default="odom" />
 	
 	<arg name="motion_estimation_source_frame_id" default="" /> <!-- For example: base_footprint -->
 	<arg name="motion_estimation_target_frame_id" default="" /> <!-- For example: odom -->
@@ -135,9 +135,9 @@
     <node pkg="mir_experiments" type="octomap_map_changes" name="octomap_tracking_server" args="$(find mir_experiments)/maps/tidy_small.bt" output="screen">
 		<param name="resolution" value="0.05" />
 		
-        <param name="frame_id" type="string" value="odom_comb" />
-        <param name="base_frame_id" type="string" value="odom_comb" />
-        <param name="change_id_frame" type="string" value="odom_comb" />
+        <param name="frame_id" type="string" value="odom" />
+        <param name="base_frame_id" type="string" value="odom" />
+        <param name="change_id_frame" type="string" value="odom" />
         <param name="topic_changes" value="/octomap_tracking_server/changeset" />
 
         <param name="min_change_pub" value="0" />
