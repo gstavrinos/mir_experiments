@@ -1,11 +1,8 @@
 #include <mir_experiments/TrackingOctomapServer.hpp>
-#include <string>
 
 using namespace octomap;
 
 namespace octomap_server {
-
-std::string flnm = "";
 
 TrackingOctomapServer::TrackingOctomapServer(const std::string& filename) :
 	    OctomapServer()
@@ -24,24 +21,23 @@ TrackingOctomapServer::TrackingOctomapServer(const std::string& filename) :
             ROS_ERROR("Could not open requested file %s, exiting.", filename.c_str());
             exit(-1);
         }
-  }
+    }
 
-  ros::NodeHandle private_nh("~");
+    ros::NodeHandle private_nh("~");
 
-  std::string changeSetTopic = "changes";
-  std::string changeIdFrame = "/base_link";
+    std::string changeSetTopic = "changes";
+    std::string changeIdFrame = "/base_link";
 
-  private_nh.param("topic_changes", changeSetTopic, changeSetTopic);
-  private_nh.param("change_id_frame", change_id_frame, changeIdFrame);
-  private_nh.param("min_change_pub", min_change_pub, 0);
+    private_nh.param("topic_changes", changeSetTopic, changeSetTopic);
+    private_nh.param("change_id_frame", change_id_frame, changeIdFrame);
+    private_nh.param("min_change_pub", min_change_pub, 0);
 
     pubChangeSet = private_nh.advertise<sensor_msgs::PointCloud2>(changeSetTopic, 1);
     m_octree->enableChangeDetection(true);
 
 }
 
-TrackingOctomapServer::~TrackingOctomapServer() {
-}
+TrackingOctomapServer::~TrackingOctomapServer() {}
 
 void TrackingOctomapServer::insertScan(const tf::Point & sensorOrigin, const PCLPointCloud & ground, const PCLPointCloud & nonground) {
     OctomapServer::insertScan(sensorOrigin, ground, nonground);
@@ -87,6 +83,7 @@ void TrackingOctomapServer::trackChanges() {
         ROS_DEBUG("[server] sending %d changed entries", (int)changedCells.size());
 
         m_octree->resetChangeDetection();
+        // TODO find a way to reset instead of reading again from file.
         if (m_octree->readBinary(flnm)) {
             m_treeDepth = m_octree->getTreeDepth();
             m_res = m_octree->getResolution();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "octomap_server/OctomapServer.h"
 
 namespace octomap_server {
@@ -16,6 +17,7 @@ protected:
 
     int min_change_pub;
     std::string change_id_frame;
+    std::string flnm = "";
     ros::Publisher pubChangeSet;
 };
 
