@@ -8,7 +8,6 @@ TrackingOctomapServer::TrackingOctomapServer(const std::string& filename) :
 	    OctomapServer()
 {
     if (filename != "") {
-            flnm = filename;
         if (m_octree->readBinary(filename)) {
             ROS_INFO("Octomap file %s loaded (%zu nodes).", filename.c_str(), m_octree->size());
             m_treeDepth = m_octree->getTreeDepth();
@@ -65,13 +64,12 @@ void TrackingOctomapServer::trackChanges() {
         pnt.z = center(2);
 
         if (occupied) {
-          pnt.intensity = 1000;
-          changedCells.push_back(pnt);
+            pnt.intensity = 1000;
         }
         else {
-          pnt.intensity = -1000;
+            pnt.intensity = -1000;
         }
-        // changedCells.push_back(pnt);
+        changedCells.push_back(pnt);
     }
 
     if (c > min_change_pub) {
@@ -82,19 +80,10 @@ void TrackingOctomapServer::trackChanges() {
         pubChangeSet.publish(changed);
         ROS_DEBUG("[server] sending %d changed entries", (int)changedCells.size());
 
-        m_octree->resetChangeDetection();
-        // TODO find a way to reset instead of reading again from file.
-        if (m_octree->readBinary(flnm)) {
-            m_treeDepth = m_octree->getTreeDepth();
-            m_res = m_octree->getResolution();
-            m_gridmap.info.resolution = m_res;
-
-            publishAll();
-        }
-        else {
-            ROS_ERROR("Could not open requested file %s, exiting.", flnm.c_str());
-            exit(-1);
-        }
+        // By NOT resetting change detection
+        // we achieve the constant comparison
+        // with the original map.
+        // m_octree->resetChangeDetection();
         ROS_DEBUG("[server] octomap size after updating: %d", (int)m_octree->calcNumNodes());
     }
 }
