@@ -13,7 +13,12 @@
         <param name="min_change_pub" value="0" />
 		<!-- data source to integrate (PointCloud2) -->
         <remap from="cloud_in" to="/camera/depth/points" />
-		<remap from="projected_map" to="projected_map2" />
+        <remap from="free_cells_vis_array" to="/octomap_tracking_server/free_cells_vis_array" />
+        <remap from="occupied_cells_vis_array" to="/octomap_tracking_server/occupied_cells_vis_array" />
+        <remap from="octomap_binary" to="/octomap_tracking_server/octomap_binary" />
+        <remap from="octomap_full" to="/octomap_tracking_server/octomap_full" />
+        <remap from="octomap_point_cloud_centers" to="/octomap_tracking_server/octomap_point_cloud_centers" />
+        <remap from="projected_map" to="/octomap_tracking_server/projected_map" />
 	
     </node>
 
