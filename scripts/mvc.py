@@ -60,18 +60,30 @@ def viewCallback(msg):
 # Combining the three pointclouds
 def combineAndPublish():
     global changes_pc2, map_pc2, view_pc2, new_stuff
-    if changes_pc2 != None and map_pc2 != None and view_pc2 != None:
-        c = list(pc2.read_points(map_pc2, field_names=("x", "y", "z")))
+    if changes_pc2 is not None and map_pc2 is not None and view_pc2 is not None:
+        # Visualization priority:
+        # 1. Changes
+        # 2. Viewed areas
+        # 3. Map
 
-        mc = [[k[0][0],k[0][1],k[0][2],k[1]] for k in list(zip(c, [map_colour for x in c]))]
+        # Changes
+        cc = list(pc2.read_points(changes_pc2, field_names=("x", "y", "z")))
+        cc = [[k[0][0],k[0][1],k[0][2],k[1]] for k in list(zip(cc, [changes_colour for x in cc]))]
 
-        c = list(pc2.read_points(changes_pc2, field_names=("x", "y", "z")))
+        # Viewed area
+        vc = list(pc2.read_points(view_pc2, field_names=("x", "y", "z", "rgb")))
+        #  vc = [k for k in vc if k not in cc]
 
-        cc = [[k[0][0],k[0][1],k[0][2],k[1]] for k in list(zip(c, [changes_colour for x in c]))]
+        # Map
+        mc = list(pc2.read_points(map_pc2, field_names=("x", "y", "z")))
+        #  mc = [[k[0][0],k[0][1],k[0][2],k[1]] for k in list(zip(mc, [map_colour for x in mc])) if k not in cc and k not in map(lambda x:(x[0],x[1],x[2]),vc)]
+        mc = [[k[0][0],k[0][1],k[0][2],k[1]] for k in list(zip(mc, [map_colour for x in mc]))] 
 
-        c = list(pc2.read_points(view_pc2, field_names=("x", "y", "z", "rgb")))
-        # TODO remove duplicates (in xyz)
-        z = mc+cc+c 
+        # NOTE
+        # Filtering duplicate points is too time-consuming to do
+        # When (if) size becomes a problem maybe it's worth investigating
+        # (Changing the order of merging keeps indirectly applies the colour priority)
+        z = mc+vc+cc
 
         rgbfield = PointField()
         rgbfield.name = "rgb"
