@@ -12,6 +12,21 @@
       /**
        * Setup all visualization elements when the page is loaded.
        */
+
+    function makeColour(x) {
+        var hex = Number(x).toString(16);
+        if (hex[0] == "-") {
+            hex = hex.substring(1,7);
+        }
+        else{
+            hex = hex.substring(0,6);
+        }
+        var r = parseInt(hex.substring(0,2));
+        var g = parseInt(hex.substring(2,4));
+        var b = parseInt(hex.substring(4,6));
+        return new THREE.Color(r,g,b);
+    }
+
       function init() {
         // Connect to ROS.
         var ros = new ROSLIB.Ros({
@@ -32,17 +47,17 @@
           angularThres : 0.01,
           transThres : 0.01,
           rate : 10.0,
-          fixedFrame : '/base_link'
+          fixedFrame : '/camera_link'
         });
 
         var cloudClient = new ROS3D.PointCloud2({
             ros: ros,
             tfClient: tfClient,
             rootObject: viewer.scene,
-            topic: '/camera/depth/points',
-            max_pts: 100000,
-            material: { size: 0.01},
-            colorsrc: 'rgb'
+            topic: '/camera/depth_registered/points',
+            max_pts: 500000,
+            material: { size: 0.01, sizeAttenuation: false},
+            colorsrc: 'rgb', colormap: function(x) { return makeColour(x); }
         });
       }
     </script>
@@ -53,7 +68,9 @@
   <p>Run the following commands in the terminal then refresh the page.</p>
   <ol>
     <li><tt>roslaunch mir_experiments sim_tidy_small_hospital_room.launch</tt></li>
-    <li><tt>or</tt></li>
+  </ol>
+    <tt>or</tt>
+  <ol>
     <li><tt>rosbag play pointcloud_test.bag -l --clock </tt></li>
     <li><tt>roslaunch rosbridge_server rosbridge_websocket.launch</tt></li>
     <li><tt>rosrun tf2_web_republisher tf2_web_republisher</tt></li>
