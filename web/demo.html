@@ -41,7 +41,8 @@
             rootObject: viewer.scene,
             topic: '/camera/depth/points',
             max_pts: 100000,
-            material: { size: 0.1, color: 0xffffff }
+            material: { size: 0.01},
+            colorsrc: 'rgb'
         });
       }
     </script>
@@ -52,6 +53,8 @@
   <p>Run the following commands in the terminal then refresh the page.</p>
   <ol>
     <li><tt>roslaunch mir_experiments sim_tidy_small_hospital_room.launch</tt></li>
+    <li><tt>or</tt></li>
+    <li><tt>rosbag play pointcloud_test.bag -l --clock </tt></li>
     <li><tt>roslaunch rosbridge_server rosbridge_websocket.launch</tt></li>
     <li><tt>rosrun tf2_web_republisher tf2_web_republisher</tt></li>
   </ol>
