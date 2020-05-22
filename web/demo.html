@@ -13,17 +13,18 @@
        * Setup all visualization elements when the page is loaded.
        */
 
+    var normalised = new Float32Array(256);
+    for (var i = 0; i < 256; i++) {
+      normalised[i] = i / 255.0;
+    }
+    var floatArray = new Float32Array(1);
+
     function makeColour(x) {
-        var hex = Number(x).toString(16);
-        if (hex[0] == "-") {
-            hex = hex.substring(1,7);
-        }
-        else{
-            hex = hex.substring(0,6);
-        }
-        var r = parseInt(hex.substring(0,2));
-        var g = parseInt(hex.substring(2,4));
-        var b = parseInt(hex.substring(4,6));
+        floatArray[0] = x;
+        let intArray = new Int32Array(floatArray.buffer)[0];
+        let r = normalised[(intArray >> 16) & 0xff];
+        let g = normalised[(intArray >> 8) & 0xff];
+        let b = normalised[(intArray) & 0xff];
         return new THREE.Color(r,g,b);
     }
 
@@ -56,7 +57,7 @@
             rootObject: viewer.scene,
             topic: '/camera/depth_registered/points',
             max_pts: 500000,
-            material: { size: 0.01, sizeAttenuation: false},
+            material: { size: 0.01},
             colorsrc: 'rgb', colormap: function(x) { return makeColour(x); }
         });
       }
