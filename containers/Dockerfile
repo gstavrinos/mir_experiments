@@ -14,9 +14,14 @@ apt-get install ros-melodic-octomap-ros -y && \
 apt-get install ros-melodic-octomap-mapping -y && \
 apt-get install ros-melodic-octomap-msgs -y && \
 apt-get install ros-melodic-rospy-message-converter -y && \
-apt-get install python-catkin-tools -y
+apt-get install python-catkin-tools -y && \
+apt-get install git -y && \
+apt-get install build-essential -y && \
+apt-get install python-rosdep
 
-RUN mkdir -p /opt/catkin_ws/src && \
+RUN rosdep init && \
+rosdep update && \
+mkdir -p /opt/catkin_ws/src && \
 cd /opt/catkin_ws/src && \
 git clone https://github.com/roboskel/roboskel_msgs && \
 git clone https://github.com/roboskel/roboskel_ros_resources && \
