@@ -6,35 +6,41 @@ FROM ros:melodic-ros-core-bionic
 
 LABEL maintainer="George Stavrinos <gstavrinos@iit.demokritos.gr>"
 
-RUN apt-get update && \
-apt-get install ros-melodic-desktop-full -y && \
-apt-get install ros-melodic-costmap-2d -y && \
-apt-get install ros-melodic-costmap-queue -y && \
-apt-get install ros-melodic-octomap-server -y && \
-apt-get install ros-melodic-octomap-ros -y && \
-apt-get install ros-melodic-octomap-mapping -y && \
-apt-get install ros-melodic-octomap-msgs -y && \
-apt-get install ros-melodic-rospy-message-converter -y && \
-apt-get install python-catkin-tools -y && \
-apt-get install git -y && \
-apt-get install build-essential -y && \
-apt-get install python-rosdep
+RUN apt-get update && apt-get install -y \
+      python-catkin-tools \
+      ros-melodic-costmap-2d \
+      ros-melodic-costmap-queue \
+      ros-melodic-desktop-full \
+      ros-melodic-octomap-mapping \
+      ros-melodic-octomap-msgs \
+      ros-melodic-octomap-ros \
+      ros-melodic-octomap-server \
+      ros-melodic-rospy-message-converter && \
+      rm -rf /var/lib/apt-get/lists/*
 
-RUN rosdep init && \
-rosdep update && \
-mkdir -p /opt/catkin_ws/src && \
-cd /opt/catkin_ws/src && \
-git clone https://github.com/roboskel/roboskel_msgs && \
-git clone https://github.com/roboskel/roboskel_ros_resources && \
-git clone https://github.com/gstavrinos/mir_robot && \
-git clone https://github.com/gstavrinos/mir_experiments && \
-git clone https://github.com/gstavrinos/ros_rvv && \
-git clone https://github.com/carlosmccosta/laserscan_to_pointcloud && \
-cd .. && \
-rosdep install --from-paths src --ignore-src -r -y && \
-rm -rf /var/lib/apt-get/lists/* && \
-/bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_make --pkg roboskel_msgs" && \
-/bin/bash -c "source /opt/ros/melodic/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make"
+RUN mkdir -p /opt/catkin_ws/src
+
+RUN apt-get install -y \
+      build-essential \
+      git \
+      python-rosdep && \
+    rosdep init && \
+    rosdep update && \
+    cd /opt/catkin_ws/src && \
+    git clone https://github.com/roboskel/roboskel_msgs && \
+    git clone https://github.com/roboskel/roboskel_ros_resources && \
+    git clone https://github.com/gstavrinos/mir_robot && \
+    git clone https://github.com/gstavrinos/mir_experiments && \
+    git clone https://github.com/gstavrinos/ros_rvv && \
+    git clone https://github.com/carlosmccosta/laserscan_to_pointcloud && \
+    cd .. && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_make --pkg roboskel_msgs" && \
+    /bin/bash -c "source /opt/ros/melodic/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make" && \
+    apt-get purge -y \
+      build-essential \
+      git && \
+    rm -rf /var/lib/apt-get/lists/*
 
 RUN sed --in-place --expression \
       '$isource "/opt/catkin_ws/devel/setup.bash"' \
