@@ -3,7 +3,8 @@
 # Build with: sudo docker build -t mir_experiments:0.1 <mir_experiments-location>/containers/Dockerfile
 # Run with: sudo docker run --net=host mir_experiments:0.1
 FROM ros:melodic-ros-core-bionic
-MAINTAINER George Stavrinos gstavrinos@iit.demokritos.gr
+
+LABEL maintainer="George Stavrinos <gstavrinos@iit.demokritos.gr>"
 
 RUN apt-get update && \
 apt-get install ros-melodic-desktop-full -y && \
