@@ -1,0 +1,28 @@
+version: '3.4'
+services:
+    simulation:
+        image: mir_experiments:0.2
+        network_mode: host
+        command: roslaunch mir_experiments sim_tidy_small_hospital_room.launch gui:=false gui_teleop:=false
+    # changes:
+        # image: mir_experiments:0.2
+        # network_mode: host
+        # command: roslaunch mir_experiments changes_based_on_tidy_small_room_depth_camera.launch
+        # depends_on:
+            # - simulation
+    # un_pause_simulation:
+        # image: mir_experiments:0.2
+        # network_mode: host
+        # command: rosservice call /gazebo/upause_physics "{}"
+        # depends_on:
+            # - simulation
+            # - changes
+    # dummy_teleop:
+        # image : mir_experiments:0.2
+        # network_mode: host
+        # command: rostopic pub /cmd_vel geometry_msgs/Twist #TODO
+        # depends_on:
+            # - simulation
+            # - changes
+            # - un_pause_simulation
+
