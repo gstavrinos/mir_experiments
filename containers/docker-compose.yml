@@ -10,17 +10,23 @@ services:
         # command: roslaunch mir_experiments changes_based_on_tidy_small_room_depth_camera.launch
         # depends_on:
             # - simulation
-    # un_pause_simulation:
-        # image: mir_experiments:0.2
-        # network_mode: host
-        # command: rosservice call /gazebo/upause_physics "{}"
-        # depends_on:
-            # - simulation
-            # - changes
+    un_pause_simulation:
+        image: mir_experiments:0.2
+        network_mode: host
+        command: bash -c "sleep 10; rosservice call /gazebo/unpause_physics \"{}\""
+        depends_on:
+            - simulation
     # dummy_teleop:
         # image : mir_experiments:0.2
         # network_mode: host
-        # command: rostopic pub /cmd_vel geometry_msgs/Twist #TODO
+        # command: rostopic pub /cmd_vel geometry_msgs/Twist "linear:
+                  # x: 0.0
+                  # y: 0.0
+                  # z: 0.0
+                # angular:
+                  # x: 0.0
+                  # y: 0.0
+                  # z: 0.5"  -r 10
         # depends_on:
             # - simulation
             # - changes
