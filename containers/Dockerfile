@@ -1,12 +1,13 @@
 # Docker container to easily test the mir_experiments functionality
 # At some point I will have to use docker compose to run multiple ros nodes
-# Build with: sudo docker build -t mir_experiments:0.2 <mir_experiments-location>/containers/Dockerfile
-# Run with: sudo docker run --net=host mir_experiments:0.2
+# Build with: sudo docker build -t mir_experiments:0.4 <mir_experiments-location>/containers/Dockerfile
+# Run with: sudo docker run --net=host mir_experiments:0.4
 FROM ros:melodic-ros-core-bionic
 
 LABEL maintainer="George Stavrinos <gstavrinos@iit.demokritos.gr>"
 
 RUN apt-get update && apt-get install -y \
+    xvfb \
     python-catkin-tools \
     ros-melodic-costmap-2d \
     ros-melodic-costmap-queue \
