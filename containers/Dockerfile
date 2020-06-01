@@ -1,6 +1,6 @@
 # Docker container to easily test the mir_experiments functionality
 # At some point I will have to use docker compose to run multiple ros nodes
-# Build with: sudo docker build -t mir_experiments:0.4 <mir_experiments-location>/containers/Dockerfile
+# Build with: sudo docker build -t mir_experiments:0.5 <mir_experiments-location>/containers/Dockerfile
 # Run with: sudo docker-compose up --remove-orphans
 FROM ros:melodic-ros-core-bionic
 
