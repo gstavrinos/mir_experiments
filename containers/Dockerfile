@@ -1,6 +1,6 @@
 # Docker container to easily test the mir_experiments functionality
 # At some point I will have to use docker compose to run multiple ros nodes
-# Build with: sudo docker build -t mir_experiments:0.5 <mir_experiments-location>/containers/Dockerfile
+# Build with: sudo docker build -t mir_experiments:0.6 <mir_experiments-location>/containers/Dockerfile
 # Run with: sudo docker-compose up --remove-orphans
 FROM ros:melodic-ros-core-bionic
 
@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     ros-melodic-octomap-msgs \
     ros-melodic-octomap-ros \
     ros-melodic-octomap-server \
+    ros-melodic-rosbridge-server \
+    ros-melodic-tf2-web-republisher \
     ros-melodic-rospy-message-converter \
     ros-melodic-gazebo-ros-control \
     ros-melodic-gazebo-plugins && \

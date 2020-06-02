@@ -1,27 +1,44 @@
 version: '3.4'
 services:
     simulation:
-        image: mir_experiments:0.5
+        image: mir_experiments:0.6
         network_mode: host
         command: bash -c "pkill Xvfb; Xvfb :1 -screen scrn 640x480x16 & export DISPLAY=:1 && roslaunch mir_experiments sim_tidy_small_hospital_room.launch gui:=false gui_teleop:=false"
     changes:
-        image: mir_experiments:0.5
+        image: mir_experiments:0.6
         network_mode: host
         command: bash -c "sleep 10; roslaunch mir_experiments changes_based_on_tidy_small_room_depth_camera.launch"
         depends_on:
             - simulation
     un_pause_simulation:
-        image: mir_experiments:0.5
+        image: mir_experiments:0.6
         network_mode: host
         command: bash -c "sleep 10; rosservice call /gazebo/unpause_physics \"{}\""
         depends_on:
             - simulation
     dummy_teleop:
-        image : mir_experiments:0.5
+        image : mir_experiments:0.6
         network_mode: host
         command: bash -c " sleep 5; rostopic pub /cmd_vel geometry_msgs/Twist \"[0.0, 0.0, 0.0]\" \"[0.0, 0.0, 0.5]\" -r 10"
         depends_on:
             - simulation
             - changes
             - un_pause_simulation
+    rosbridge_server:
+        image : mir_experiments:0.6
+        network_mode: host
+        command: bash -c "sleep 5; roslaunch rosbridge_server rosbridge_websocket.launch"
+        depends_on:
+            - simulation
+            - changes
+            - un_pause_simulation
+    tf2_web_republisher:
+        image : mir_experiments:0.6
+        network_mode: host
+        command: bash -c "sleep 5; rosrun tf2_web_republisher tf2_web_republisher"
+        depends_on:
+            - simulation
+            - changes
+            - un_pause_simulation
+            - rosbridge_server
 
