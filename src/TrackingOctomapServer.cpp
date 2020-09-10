@@ -22,6 +22,8 @@ TrackingOctomapServer::TrackingOctomapServer(const std::string& filename) :
         }
     }
 
+    original_tree = new OcTreeT(*m_octree);
+
     ros::NodeHandle private_nh("~");
 
     std::string changeSetTopic = "changes";
@@ -46,30 +48,34 @@ void TrackingOctomapServer::insertScan(const tf::Point & sensorOrigin, const PCL
 void TrackingOctomapServer::trackChanges() {
     KeyBoolMap::const_iterator startPnt = m_octree->changedKeysBegin();
     KeyBoolMap::const_iterator endPnt = m_octree->changedKeysEnd();
-
     pcl::PointCloud<pcl::PointXYZI> changedCells = pcl::PointCloud<pcl::PointXYZI>();
 
     int c = 0;
     for (KeyBoolMap::const_iterator iter = startPnt; iter != endPnt; ++iter) {
-        ++c;
-        OcTreeNode* node = m_octree->search(iter->first);
 
-        bool occupied = m_octree->isNodeOccupied(node);
+        OcTreeNode *original_node = original_tree->search(iter->first);
 
-        point3d center = m_octree->keyToCoord(iter->first);
+        if (original_node) {
+            c++;
 
-        pcl::PointXYZI pnt;
-        pnt.x = center(0);
-        pnt.y = center(1);
-        pnt.z = center(2);
+            bool occupied = original_tree->isNodeOccupied(original_node);
 
-        if (occupied) {
-            pnt.intensity = 1000;
+            point3d center = original_tree->keyToCoord(iter->first);
+
+            pcl::PointXYZI pnt;
+            pnt.x = center(0);
+            pnt.y = center(1);
+            pnt.z = center(2);
+
+            // Reversed the occupied colours because
+            // now we are checking the original tree now.
+            // ---
+            // Red = now free (object missing)
+            // Pink = now occupied (new object found)
+            pnt.intensity = not occupied ? 1 : -1;
+
+            changedCells.push_back(pnt);
         }
-        else {
-            pnt.intensity = -1000;
-        }
-        changedCells.push_back(pnt);
     }
 
     if (c > min_change_pub) {
@@ -78,13 +84,6 @@ void TrackingOctomapServer::trackChanges() {
         changed.header.frame_id = change_id_frame;
         changed.header.stamp = ros::Time().now();
         pubChangeSet.publish(changed);
-        ROS_DEBUG("[server] sending %d changed entries", (int)changedCells.size());
-
-        // By NOT resetting change detection
-        // we achieve the constant comparison
-        // with the original map.
-        // m_octree->resetChangeDetection();
-        ROS_DEBUG("[server] octomap size after updating: %d", (int)m_octree->calcNumNodes());
     }
 }
 

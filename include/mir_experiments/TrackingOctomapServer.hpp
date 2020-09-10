@@ -17,6 +17,7 @@ protected:
     int min_change_pub;
     std::string change_id_frame;
     ros::Publisher pubChangeSet;
+    OcTreeT *original_tree;
 };
 
 } 
